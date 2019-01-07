@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 function Book (props) {
-    const {title, image, authors, shelf, moveBook} = props
+    const {title, image, authors, shelf, id, moveBook} = props
     // const shelf = 'Want To Read'
     console.log('in book instance, shelf is ', shelf)
     return (
@@ -11,7 +11,7 @@ function Book (props) {
             <div className="book-top">
                 <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${image})` }}></div>
                 <div className="book-shelf-changer">
-                <select defaultValue={shelf} onChange={(event) => moveBook(event.target.value)}>
+                <select defaultValue={shelf} onChange={(event) => moveBook(id, event.target.value)}>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>
@@ -27,6 +27,7 @@ function Book (props) {
     )
 }
 Book.propTypes = { 
+    id: PropTypes.string.isRequired,
     shelf: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     authors: PropTypes.array.isRequired,

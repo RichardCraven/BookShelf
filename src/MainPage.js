@@ -46,12 +46,26 @@ class MainPage extends Component{
             // },
         ]
     }
-    onMoveBook(e){
-        console.log('main page moving book, e is', e)
-    }
+    // onMoveBook(e){
+    //     console.log('main page moving book, e is', e)
+    // }
     render(){
         // const {currentlyReading, wantToRead, read} = this.state
-        const {currentlyReading, wantToRead, read} = this.props
+        const {books, onMoveBook} = this.props
+        const currentlyReading = [];
+        const wantToRead = [];
+        const read = [];
+
+        for(let b in books){
+            let book = books[b]
+            if(book.shelf === 'currentlyReading'){
+              currentlyReading.push(book)
+            } else if(book.shelf === 'wantToRead'){
+              wantToRead.push(book)
+            } else if(book.shelf === 'read'){
+              read.push(book)
+            }
+          }
         console.log('mainpage books are ', currentlyReading, wantToRead, read)
         return (
             <div>
@@ -74,17 +88,17 @@ class MainPage extends Component{
                         <Shelf
                             shelfName='currentlyReading'
                             books={currentlyReading}
-                            onMoveBook = {(e) => this.onMoveBook(e)}
+                            onMoveBook = {(book, shelf) => onMoveBook(book, shelf)}
                         />
                         <Shelf
                             shelfName='wantToRead'
                             books={wantToRead}
-                            onMoveBook = {(e) => this.onMoveBook(e)}
+                            onMoveBook = {(book, shelf) => onMoveBook(book, shelf)}
                         />    
                         <Shelf
                             shelfName='read'
                             books={read}
-                            onMoveBook = {(e) => this.onMoveBook(e)}
+                            onMoveBook = {(book, shelf) => onMoveBook(book, shelf)}
                         />
                     </div>
                     </div>

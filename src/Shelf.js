@@ -34,8 +34,9 @@ class Shelf extends Component{
                                 image={book.imageLinks.thumbnail}
                                 authors={book.authors}
                                 title={book.title}
-                                shelf={shelfName}
-                                moveBook={(e) => onMoveBook(e)}
+                                shelf={book.shelf}
+                                id={book.id}
+                                moveBook={(book, shelf) => onMoveBook(book, shelf)}
                             />
                         </li>
                         ))}
