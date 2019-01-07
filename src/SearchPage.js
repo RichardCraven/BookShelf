@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-// import { ReactComponent } from '*.svg';
+import {Link} from 'react-router-dom'
 
 class SearchPage extends Component{
     render(){
@@ -7,7 +7,12 @@ class SearchPage extends Component{
             <div>search page
                 <div className="search-books">
                     <div className="search-books-bar">
-                    <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
+                    <Link 
+                        to='/'
+                        className = 'add-contact'
+                        >
+                        <button className="close-search">Close</button>
+                    </Link>
                     <div className="search-books-input-wrapper">
                         {/*
                         NOTES: The search from BooksAPI is limited to a particular set of search terms.
