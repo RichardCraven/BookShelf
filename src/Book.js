@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 function Book (props) {
     const {title, image, authors, shelf, id, moveBook} = props
-    // const shelf = 'Want To Read'
-    console.log('in book instance, shelf is ', shelf)
     return (
         <div>
             <div className="book">
@@ -28,11 +26,11 @@ function Book (props) {
 }
 Book.propTypes = { 
     id: PropTypes.string.isRequired,
-    shelf: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    authors: PropTypes.array.isRequired,
+    shelf: PropTypes.string,
+    title: PropTypes.string,
+    authors: PropTypes.array,
     image: PropTypes.string,
-    moveBook: PropTypes.func.isRequired
+    moveBook: PropTypes.func
 }
 
 export default Book;

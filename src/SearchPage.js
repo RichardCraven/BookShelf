@@ -1,25 +1,47 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom';
 import Shelf from './Shelf';
+import * as BooksAPI from './BooksAPI'
 
 class SearchPage extends Component{
     state = {
-        query: ''
+        query: '',
+        foundBooks : []
     }
+    idArr = [];
     updateQuery = (query) => {
-        this.setState({
-            query: query
-        })
+        if(query.length){
+            BooksAPI.search(query)
+                .then((res) => {
+                    this.setState({
+                        query: query,
+                        foundBooks : res
+                    })
+                })
+            
+        } else {
+            this.setState({
+                query,
+                foundBooks : []
+            })
+        }
+        
     }
     render(){
-        const {query} = this.state
-        const {books, onMoveBook} = this.props;
-
-        const visibleBooks = query === ''
-                ? books
-                : books.filter((b) => (
-                    b.title.toLowerCase().includes(query.toLowerCase()) || b.authors.join().toLowerCase().includes(query.toLowerCase())
-                ))
+        const {query, foundBooks} = this.state
+        const { onMoveBook, books} = this.props;
+        if(foundBooks.length){
+            for(let b in foundBooks){
+                foundBooks[b].shelf = 'none'
+                    for(let q in books){    
+                        if(books[q].id === foundBooks[b].id){
+                            foundBooks[b]['shelf'] = books[q].shelf
+                        }
+                    }
+            }
+        }
+        const visibleBooks = query.length
+                ? this.state.foundBooks : null
 
         return (
             <div>
@@ -41,11 +63,14 @@ class SearchPage extends Component{
                     </div>
                     </div>
                     <div className="search-books-results">
-                        <Shelf
-                            shelfName=''
-                            books={visibleBooks}
-                            onMoveBook = {(book, shelf) => onMoveBook(book, shelf)}
-                        />
+                        {foundBooks && foundBooks.length? 
+                            <Shelf
+                                shelfName=''
+                                books={visibleBooks}
+                                onMoveBook = {(book, shelf) => onMoveBook(book, shelf)}
+                            />
+                        : ''
+                        }
                     </div>
                 </div>
             </div>

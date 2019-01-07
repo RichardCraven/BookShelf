@@ -14,8 +14,6 @@ class Shelf extends Component{
             //     ]
             // }
     render(){
-        console.log(this.props)
-        // const {books} = this.state;
         const {shelfName, books, onMoveBook} = this.props;
         return (
             <div className="bookshelf">
@@ -29,12 +27,12 @@ class Shelf extends Component{
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {books.map((book) => (
-                        <li key={book.title}>
+                        <li key={book.id}>
                             <Book 
-                                image={book.imageLinks.thumbnail}
+                                image={book.imageLinks ? book.imageLinks.thumbnail : ''}
                                 authors={book.authors}
                                 title={book.title}
-                                shelf={book.shelf}
+                                shelf={book.shelf ? book.shelf : 'none'}
                                 id={book.id}
                                 moveBook={(book, shelf) => onMoveBook(book, shelf)}
                             />
